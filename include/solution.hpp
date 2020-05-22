@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <set>
 #include <vector>
 
 using namespace std;
@@ -69,10 +70,28 @@ class Solution {
     }
   }
 
+  void test_lengthOfLongestSubstring() {
+    int res_1 = lengthOfLongestSubstring("abcabcbb");
+    if (res_1 != 3) {
+      throw logic_error("test_lengthOfLongestSubstring failed: 1");
+    }
+
+    int res_2 = lengthOfLongestSubstring("bbbbb");
+    if (res_2 != 1) {
+      throw logic_error("test_lengthOfLongestSubstring failed: 2");
+    }
+
+    int res_3 = lengthOfLongestSubstring("pwwkew");
+    if (res_3 != 3) {
+      throw logic_error("test_lengthOfLongestSubstring failed: 3");
+    }
+  }
+
 public:
   void Test() {
     test_twoSum();
     test_addTwoNumbers();
+    test_lengthOfLongestSubstring();
   }
 
   // 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那
@@ -150,9 +169,35 @@ public:
   // 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
   //      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
   int lengthOfLongestSubstring(string s) {
-
-    for (int i = 0, i_limit = s.size(); i < i_limit; i++) {
-      auto const &c = s[i];
+    if (s.size() <= 1) {
+      return s.size();
     }
+    int max_l = 0, max_r = 0, l = 0, r = 0;
+    set<char> char_set{};
+    auto update_max = [&max_l, &max_r](int l, int r) {
+      if (r - 1 - l > max_r - max_l) {
+        max_l = l;
+        max_r = r - 1;
+      }
+    };
+    while (r < s.size()) {
+      // 没见过，直接插入
+      if (char_set.find(s[r]) == char_set.end()) {
+        char_set.insert(s[r]);
+      } else {
+        // 见过了，必须中断。
+        // 检查本次是否更新了最大结果。
+        update_max(l, r);
+        // 把左界移到正确的位置
+        while (s[l] != s[r]) {
+          char_set.erase(s[l]);
+          ++l;
+        }
+        ++l;
+      }
+      ++r;
+    }
+    update_max(l, r);
+    return max_r - max_l + 1;
   }
 };
