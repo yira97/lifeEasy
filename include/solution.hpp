@@ -1,5 +1,6 @@
 
 
+#include <array>
 #include <iostream>
 #include <map>
 #include <set>
@@ -200,4 +201,72 @@ public:
     update_max(l, r);
     return max_r - max_l + 1;
   }
-};
+
+  // 给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
+  // 请你找出这两个正序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+  // 你可以假设 nums1 和 nums2 不会同时为空。
+
+  // 示例 1:
+  // nums1 = [1, 3]
+  // nums2 = [2]
+  // 则中位数是 2.0
+
+  // 示例 2:
+  // nums1 = [1, 2]
+  // nums2 = [3, 4]
+  // 则中位数是 (2 + 3)/2 = 2.5
+  double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
+    // TODO
+  }
+
+  // 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+
+  // 示例 1：
+  // 输入: "babad"
+  // 输出: "bab"
+  // 注意: "aba" 也是一个有效答案。
+
+  // 示例 2：
+  // 输入: "cbbd"
+  // 输出: "bb"
+  string longestPalindrome(string s) {
+    int s_size = s.size();
+
+    auto odd_palindrome = [&s, &s_size](int c) -> array<int, 2> {
+      int r = 1;
+      while (c - r >= 0 && c + r < s_size && s[c - r] == s[c + r]) {
+        ++r;
+      }
+      --r;
+      return {c - r, c + r};
+    };
+
+    auto even_palindrome = [&s, &s_size](int c1) -> int {
+      int c2 = c1 + 1;
+      int r = 1;
+      while (c1 - r >= 0 && c2 + r < s_size && s[c1 - r] == s[c2 + r]) {
+        ++r;
+      }
+      --r;
+      return {c1 - }
+    };
+    auto is_palindrome = [&s](int l, int r) -> bool {
+      if (s.size() <= 1) {
+        return true;
+      }
+      while (l < r) {
+        if (s[l] != s[r]) {
+          return false;
+        }
+        ++l;
+        --r;
+      }
+      return true;
+    };
+
+    auto max_palindrome = [&s](int l, int r) -> array<int, 2> { int center = }
+
+    while (r - l >) {
+      if (l)
+    }
+  };
